@@ -7,7 +7,7 @@ const PredictionService = {
     },
 
     fetchPredictedDataForAgent:function(){
-        return axios.get("http://localhost:8081/prediction/getLatestData")
+        return axios.get("http://localhost:8081/prediction/getLatestOpenIncidents")
     },
 
     updateTask:function(patchData,id){
