@@ -80,6 +80,7 @@ export class Agent extends Component {
                 <TableCell align="center"><b>BAN</b></TableCell>
                 <TableCell align="center"><b>Description</b></TableCell>
                 <TableCell align="center"><b>Status</b></TableCell>
+                <TableCell align="center"><b>RCA</b></TableCell>
                 <TableCell align="center"><b>Problem Area/Workgroup</b></TableCell>
                 <TableCell align="center"><b>Soultion</b></TableCell>
                 <TableCell align="center"><b>createdAt</b></TableCell>
@@ -91,10 +92,12 @@ export class Agent extends Component {
                   key={row.id}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                  <TableCell align="center"><Button onClick={()=>this.handleOpen(row)}>{row.id}</Button></TableCell>
+                  <TableCell align="center">{row.id}</TableCell>
                   <TableCell align="center">{row.ban}</TableCell>
                   <TableCell align="center">{row.description}</TableCell>
                   <TableCell align="center">{row.status}</TableCell>
+                  <TableCell align="center">{row.rca}</TableCell>
+
                   <TableCell align="center">
                     <Box sx={{ minWidth: 120 }}>
                     <FormControl fullWidth>
@@ -131,76 +134,18 @@ export class Agent extends Component {
             </TableBody>  
             </Table>
           </TableContainer>
-                  <Modal
-                    open={this.state.open}
-                    onClose={()=>this.handleClose()}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                  >
-                    <Box sx={style}>
-                    <div>
-                <TextField
-                  id="outlined-multiline-flexible"
-                  label="Incident Id"
-                  sx={{ m: 0.5, width: '22ch' }} 
-                  variant="outlined"
-                  value={this.state.currentSelectedModal.id}
-                />
-                <TextField
-                  id="outlined-textarea"
-                  label="BAN"
-                  sx={{ m: 0.5, width: '22ch' }} 
-                  variant="outlined"
-                  value={this.state.currentSelectedModal.ban}
-                />
-                <TextField
-                  id="outlined-multiline-static"
-                  label="Description"
-                  fullWidth sx={{ m: 0.5 }}
-                  value={this.state.currentSelectedModal.description}
-                />
-                <TextField
-                  id="outlined-multiline-static"
-                  label="Comments"
-                  fullWidth sx={{ m: 0.5 }}
-                  multiline
-                  rows={4}
-                  defaultValue="Default Comment"
-                />
-                <TextField
-                  id="outlined-textarea"
-                  label="Solution"
-                  fullWidth sx={{m: 1}}
-                  variant="outlined"
-                  value={this.state.currentSelectedModal.recoveryActions}
-                />
-                <TextField
-                  id="outlined-textarea"
-                  label="Status"
-                  sx={{ m: 1, width: '22ch' }} 
-                  variant="outlined"
-                  value={this.state.currentSelectedModal.status}
-                />
-                <TextField
-                  id="standard-select-currency-native"
-                  select
-                  label={this.state.currentSelectedModal.workgroup}
-                  defaultValue="EUR"
-                  SelectProps={{
-                    native: true,
-                  }}
-                  helperText="Please select your workgroup"
-                  variant="filled"
-                >
-                  {/* {currencies.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))} */}
-                </TextField>
-              </div>
-            </Box>
-          </Modal>
+              <Modal
+                open={this.state.open}
+                onClose={()=>this.handleClose()}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box sx={style}>
+                  <div>
+                    
+                  </div>
+                </Box>
+              </Modal>
       </div>
     )
   }
