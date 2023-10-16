@@ -3,9 +3,9 @@ import React, { Component } from 'react'
 import Button from '@mui/material/Button';
 import PredictionService from '../service/PredictionService';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
+import { FormControlLabel, FormGroup, Radio, RadioGroup } from '@mui/material';
 
 const style = {
   position: 'absolute',
@@ -27,7 +27,9 @@ export class Agent extends Component {
             taskData: {},
             age: "",
             open:false,
-            currentSelectedModal:{}
+            currentSelectedModal:{},
+            workflowSteps:"",
+            isWorkFlowRequired:""
         }
     }
 
@@ -37,11 +39,15 @@ export class Agent extends Component {
       PredictionService.updateTask(this.state.taskData,data.taskFlowId)
       console.log("Task Data Accept:"+this.state.taskData)
     }
-    handleReject(data){
+    handleReject = (data)=>{
       console.log("Handle Reject "+JSON.stringify(data))
-      this.setState({taskData:{"op":"update","key":"taskFlowId",value:false}})
+      console.log(this.state.workflowSteps)
+      console.log(this.state.isWorkFlowRequired)
+      this.setState(
+        {taskData:{"op":"update","key":"taskFlowId","value":"false",
+        "workflowSteps":this.state.workflowSteps,"isWorkflowRequired":this.state.isWorkFlowRequired}})
       PredictionService.updateTask(this.state.taskData,data.taskFlowId)
-      console.log("Task Data Accept:"+this.state.taskData)
+      console.log("Task Data Rejected:"+this.state.taskData)
     }
     handleOpen(row){
       console.log("Handle Open")
@@ -50,6 +56,12 @@ export class Agent extends Component {
     }
     handleClose(){
       this.setState({open : false})
+    }
+    handleWorkflowSteps(event){
+      this.setState({workflowSteps:event.target.value})
+    }
+    handleIsWorkflowRequired(event){
+      this.setState({isWorkFlowRequired:event.target.value})
     }
 
 
@@ -125,7 +137,7 @@ export class Agent extends Component {
                   <Button variant="outlined" color="success" onClick={()=>this.handleAccept(row)}>
                     Accept
                   </Button>
-                  <Button variant="contained" color="error" onClick={()=>this.handleReject(row)}>
+                  <Button variant="contained" color="error" onClick={()=>this.handleOpen(row)}>
                     Reject
                   </Button>
                   </TableCell>
@@ -141,9 +153,26 @@ export class Agent extends Component {
                 aria-describedby="modal-modal-description"
               >
                 <Box sx={style}>
-                  <div>
-                    
-                  </div>
+                  <form autoComplete='off'>
+                      <TextField
+                        id="outlined-multiline-static"
+                        label="Workflow Steps"
+                        multiline
+                        rows={4}
+                        value={this.state.workflowSteps}
+                        onChange={this.handleWorkflowSteps.bind(this)}
+                      />
+                      <RadioGroup
+                        aria-labelledby="demo-controlled-radio-buttons-group"
+                        name="controlled-radio-buttons-group"
+                        value={this.state.isWorkFlowRequired}
+                        onChange={this.handleIsWorkflowRequired.bind(this)}
+                      >
+                        <FormControlLabel value="true" control={<Radio />} label="Yes" />
+                        <FormControlLabel value="false" control={<Radio />} label="No" />
+                      </RadioGroup>
+                    <Button type='button' onClick={()=>{this.handleReject(this.state.currentSelectedModal)}}>Submit</Button>
+                  </form>
                 </Box>
               </Modal>
       </div>
