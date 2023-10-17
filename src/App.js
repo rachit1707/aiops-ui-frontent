@@ -16,9 +16,9 @@ const App = () =>{
           <Sidebar/>
           <Routes>
             <Route path="/" exact element={<HomePage/>}/>
-            <Route path="/home" exact element={<HomePage/>}/>
-            <Route path="/incidents" exact element={<Dashboard/>}/>
-            <Route path="/prediction" exact element={<Prediction/>}/>
+            <Route path="/upload" exact element={<HomePage/>}/>
+            <Route path="/dashboard" exact element={<Dashboard/>}/>
+            <Route path="/incidents" exact element={<Prediction/>}/>
             <Route path="/agent" exact element={<Agent/>}/>
             <Route path="/uploadIncidents" exact element={<CSVReader1/>}/>
           </Routes>

@@ -5,7 +5,7 @@ import PredictionService from '../service/PredictionService';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
-import { FormControlLabel, FormGroup, Radio, RadioGroup } from '@mui/material';
+import { Checkbox, FormControlLabel, FormGroup, Radio, RadioGroup } from '@mui/material';
 
 const style = {
   position: 'absolute',
@@ -35,7 +35,8 @@ export class Agent extends Component {
 
     handleAccept(data){
       console.log("Handle Accept "+JSON.stringify(data))
-      this.setState({taskData:{"op":"update","key":"taskFlowId",value:true}})
+      this.setState({taskData:{"op":"update","key":"taskFlowId",value:true,
+      "workflowSteps":"","isWorkflowRequired":false}})
       PredictionService.updateTask(this.state.taskData,data.taskFlowId)
       console.log("Task Data Accept:"+this.state.taskData)
     }
@@ -134,10 +135,11 @@ export class Agent extends Component {
                   <TableCell align="center">{row.recoveryActions  }</TableCell>
                   <TableCell align="center">{row.createdAt }</TableCell>
                   <TableCell align="center">
-                  <Button variant="outlined" color="success" onClick={()=>this.handleAccept(row)}>
+                  <Button variant="contained" color="success" onClick={()=>this.handleAccept(row)}>
                     Accept
                   </Button>
-                  <Button variant="contained" color="error" onClick={()=>this.handleOpen(row)}>
+                  <hr/>
+                  <Button variant="outlined" color="error" onClick={()=>this.handleOpen(row)}>
                     Reject
                   </Button>
                   </TableCell>
@@ -158,6 +160,7 @@ export class Agent extends Component {
                         id="outlined-multiline-static"
                         label="Workflow Steps"
                         multiline
+                        fullWidth
                         rows={4}
                         value={this.state.workflowSteps}
                         onChange={this.handleWorkflowSteps.bind(this)}
@@ -168,8 +171,8 @@ export class Agent extends Component {
                         value={this.state.isWorkFlowRequired}
                         onChange={this.handleIsWorkflowRequired.bind(this)}
                       >
-                        <FormControlLabel value="true" control={<Radio />} label="Yes" />
-                        <FormControlLabel value="false" control={<Radio />} label="No" />
+                        <FormControlLabel value="true" control={<Radio />} label="Do you want to create automated workflow with predefined stpes?" />
+                        <FormControlLabel value="false" control={<Radio />} label="Do you want to create automated workflow without predefined stpes?"/>
                       </RadioGroup>
                     <Button type='button' onClick={()=>{this.handleReject(this.state.currentSelectedModal)}}>Submit</Button>
                   </form>

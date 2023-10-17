@@ -1,19 +1,17 @@
 import React from "react";
 import HomeIcon from '@mui/icons-material/Home';
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
-import BatchPredictionIcon from '@mui/icons-material/BatchPrediction';
+// import BatchPredictionIcon from '@mui/icons-material/BatchPrediction';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
+import ViewListIcon from '@mui/icons-material/ViewList';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 
 export const SidebarData = [
     {
-        title: "Home",
-        icon: <HomeIcon/>,
-        link: "/home"
-    },
-    {
-        title: "Incident's List",
-        icon: <SpaceDashboardIcon/>,
-        link: "/incidents"
+        title: "Upload CSV",
+        icon: <UploadFileIcon/>,
+        link: "/upload"
     },
     // {
     //     title: "Prediction",
@@ -24,5 +22,10 @@ export const SidebarData = [
         title: "Agent Pannel",
         icon: <SupportAgentIcon/>,
         link: "/agent"
+    },
+    {
+        title: "Reporting Dashboard",
+        icon: <DashboardIcon/>,
+        link: "/dashboard"
     }
 ]
