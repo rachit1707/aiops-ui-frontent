@@ -2,6 +2,7 @@ import { FormControl, InputLabel, MenuItem, Paper, Select, Table, TableBody, Tab
 import React, { Component } from 'react'
 import Button from '@mui/material/Button';
 import PredictionService from '../service/PredictionService';
+import AiopsService from '../service/AiopsService';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
@@ -64,7 +65,10 @@ export class Agent extends Component {
     handleIsWorkflowRequired(event){
       this.setState({isWorkFlowRequired:event.target.value})
     }
-
+    runBulkProcess(event){
+      event.preventDefault()
+      AiopsService.runBulkProcess()
+    }
 
     componentDidMount(){
         PredictionService.fetchPredictedDataForAgent()
@@ -74,18 +78,19 @@ export class Agent extends Component {
             })
     }
 
-    // componentDidUpdate(){
-    //   PredictionService.fetchPredictedDataForAgent()
-    //   .then((res)=>{
-    //       this.setState({openTask : res.data})
-    //       console.log(this.state.openTask)
-    //   })
-    // }
+     componentDidUpdate(){
+       PredictionService.fetchPredictedDataForAgent()
+          .then((res)=>{
+            this.setState({openTask : res.data})
+            console.log(this.state.openTask)
+          })
+    }
   
   render() {
     return (
       <div className='mainPannel'>
          <TableContainer component={Paper}>
+         <Button variant="contained" onClick={this.runBulkProcess}>Fetch New Incidents</Button>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
