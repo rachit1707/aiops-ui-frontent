@@ -6,7 +6,9 @@ import AiopsService from '../service/AiopsService';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
-import { Checkbox, FormControlLabel, FormGroup, Radio, RadioGroup } from '@mui/material';
+import { Checkbox, FormControlLabel, FormGroup, Radio, RadioGroup,NativeSelect, Stack } from '@mui/material';
+import ScheduleIcon from '@mui/icons-material/Schedule';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const style = {
   position: 'absolute',
@@ -34,40 +36,50 @@ export class Agent extends Component {
         }
     }
 
-    handleAccept(data){
+    handleAccept = (data) => {
       console.log("Handle Accept "+JSON.stringify(data))
-      this.setState({taskData:{"op":"update","key":"taskFlowId",value:true,
-      "workflowSteps":"","isWorkflowRequired":false}})
-      PredictionService.updateTask(this.state.taskData,data.taskFlowId)
-      console.log("Task Data Accept:"+this.state.taskData)
+      this.setState(
+        {taskData:{"op":"update","key":"taskFlowId",value:true,"workflowSteps":"","isWorkflowRequired":false}}, ()=>{
+          PredictionService.updateTask(this.state.taskData,data.taskFlowId)
+          console.log("Task Data Accept:"+JSON.stringify(this.state.taskData))
+        }
+      )
     }
+
     handleReject = (data)=>{
       console.log("Handle Reject "+JSON.stringify(data))
       console.log(this.state.workflowSteps)
       console.log(this.state.isWorkFlowRequired)
       this.setState(
         {taskData:{"op":"update","key":"taskFlowId","value":"false",
-        "workflowSteps":this.state.workflowSteps,"isWorkflowRequired":this.state.isWorkFlowRequired}})
-      PredictionService.updateTask(this.state.taskData,data.taskFlowId)
-      console.log("Task Data Rejected:"+this.state.taskData)
+        "workflowSteps":this.state.workflowSteps,"isWorkflowRequired":this.state.isWorkFlowRequired}},()=>{
+          PredictionService.updateTask(this.state.taskData,data.taskFlowId)
+          console.log("Task Data Rejected:"+this.state.taskData)
+        })
     }
-    handleOpen(row){
+    handleOpen = (row)=>{
       console.log("Handle Open")
       this.setState({open : true})
       this.setState({currentSelectedModal:row})
     }
-    handleClose(){
+    handleClose = ()=>{
       this.setState({open : false})
     }
-    handleWorkflowSteps(event){
+    handleWorkflowSteps = (event) => {
       this.setState({workflowSteps:event.target.value})
     }
-    handleIsWorkflowRequired(event){
+    handleIsWorkflowRequired = (event)=>{
       this.setState({isWorkFlowRequired:event.target.value})
     }
-    runBulkProcess(event){
+    runBulkProcess = (event)=>{
       event.preventDefault()
       AiopsService.runBulkProcess()
+    }
+    clearDB = (event)=>{
+      event.preventDefault()
+      AiopsService.clearDB().then((res)=>{
+        console.log(res)
+      })
     }
 
     componentDidMount(){
@@ -82,60 +94,63 @@ export class Agent extends Component {
        PredictionService.fetchPredictedDataForAgent()
           .then((res)=>{
             this.setState({openTask : res.data})
-            console.log(this.state.openTask)
           })
     }
   
   render() {
     return (
       <div className='mainPannel'>
-         <TableContainer component={Paper}>
-         <Button variant="contained" onClick={this.runBulkProcess}>Fetch New Incidents</Button>
+        <Stack spacing={2} sx={{marginTop:'20px'}}>
+          <Stack spacing={{ xs: 1, sm: 2 }} direction="row" useFlexGap flexWrap="wrap" justifyContent="center">
+            <Button variant="contained" onClick={this.runBulkProcess}><ScheduleIcon/>&nbsp;&nbsp; Run Scheduler</Button>
+            <Button variant="contained" onClick={this.clearDB}><DeleteIcon/>&nbsp;&nbsp; Clear Database</Button>
+          </Stack>
+          <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
+                <TableCell padding="checkbox"><Checkbox color="primary"/></TableCell>
                 <TableCell align="center"><b>Incident Id</b></TableCell>
                 <TableCell align="center"><b>BAN</b></TableCell>
                 <TableCell align="center"><b>Description</b></TableCell>
                 <TableCell align="center"><b>Status</b></TableCell>
+                <TableCell align="center"><b>Source System</b></TableCell>
                 <TableCell align="center"><b>RCA</b></TableCell>
-                <TableCell align="center"><b>Problem Area/Workgroup</b></TableCell>
+                <TableCell align="center" style={{width:'100px'}}><b>Problem Area/Workgroup</b></TableCell>
                 <TableCell align="center"><b>Soultion</b></TableCell>
-                <TableCell align="center"><b>createdAt</b></TableCell>
+                <TableCell align="center"><b>Created At</b></TableCell>
+                <TableCell align="center"></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
             {this.state.openTask.map((row) =>(
-                <TableRow
-                  key={row.id}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
+                <TableRow key={row.id}>
+                  <TableCell padding="checkbox"><Checkbox color="primary"/></TableCell>
                   <TableCell align="center">{row.id}</TableCell>
                   <TableCell align="center">{row.ban}</TableCell>
                   <TableCell align="center">{row.description}</TableCell>
                   <TableCell align="center">{row.status}</TableCell>
+                  <TableCell align="center">{row.type}</TableCell>
                   <TableCell align="center">{row.rca}</TableCell>
 
                   <TableCell align="center">
-                    <Box sx={{ minWidth: 120 }}>
-                    <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">{row.workgroup}</InputLabel>
-                        <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={this.state.age}
-                        label="Age"
-                        onChange="#"
-                        >
-                            <MenuItem value={10}>networkWorkgroup</MenuItem>
-                            <MenuItem value={20}>productWorkgroup</MenuItem>
-                            <MenuItem value={30}>orderCancelWorkgroup</MenuItem>
-                            <MenuItem value={20}>FinX-L1-OPS-ACC</MenuItem>
-                            <MenuItem value={30}>FinX-L1-OPS-DEP</MenuItem>
-                            <MenuItem value={30}>FIN-X-Performance</MenuItem>
-                        </Select>
-                    </FormControl>
-                    </Box>
+                  <FormControl fullWidth>
+                    <NativeSelect
+                      defaultValue={row.workgroup}
+                      inputProps={{
+                        name: 'age',
+                        id: 'uncontrolled-native',
+                      }} style={{width:'150px'}}
+                    >
+                      <option value={"orderWorkgroup"}>orderWorkgroup</option>
+                      <option value={"networkWorkgroup"}>networkWorkgroup</option>
+                      <option value={"productWorkgroup"}>productWorkgroup</option>
+                      <option value={"orderCancelWorkgroup"}>orderCancelWorkgroup</option>
+                      <option value={"FinX-L1-OPS-ACC"}>FinX-L1-OPS-ACC</option>
+                      <option value={"FinX-L1-OPS-DEP"}>FinX-L1-OPS-DEP</option>
+                      <option value={"FIN-X-Performance"}>FIN-X-Performance</option>
+                    </NativeSelect>
+                  </FormControl>
                   </TableCell>
                   <TableCell align="center">{row.recoveryActions  }</TableCell>
                   <TableCell align="center">{row.createdAt }</TableCell>
@@ -153,6 +168,8 @@ export class Agent extends Component {
             </TableBody>  
             </Table>
           </TableContainer>
+        </Stack>
+         
               <Modal
                 open={this.state.open}
                 onClose={()=>this.handleClose()}
@@ -160,7 +177,7 @@ export class Agent extends Component {
                 aria-describedby="modal-modal-description"
               >
                 <Box sx={style}>
-                  <form autoComplete='off'>
+                  <form autoComplete='off' onSubmit={()=>{this.handleReject(this.state.currentSelectedModal)}}>
                       <TextField
                         id="outlined-multiline-static"
                         label="Workflow Steps"
@@ -176,10 +193,10 @@ export class Agent extends Component {
                         value={this.state.isWorkFlowRequired}
                         onChange={this.handleIsWorkflowRequired.bind(this)}
                       >
-                        <FormControlLabel value="true" control={<Radio />} label="Do you want to create automated workflow with predefined stpes?" />
-                        <FormControlLabel value="false" control={<Radio />} label="Do you want to create automated workflow without predefined stpes?"/>
+                        <FormControlLabel value="true" control={<Radio />} label="Do you want to create automated workflow with predefined steps?" />
+                        <FormControlLabel value="false" control={<Radio />} label="Do you want to create automated workflow without predefined steps?"/>
                       </RadioGroup>
-                    <Button type='button' onClick={()=>{this.handleReject(this.state.currentSelectedModal)}}>Submit</Button>
+                    <Button type='submit' variant="contained">Submit</Button>
                   </form>
                 </Box>
               </Modal>
