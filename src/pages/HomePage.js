@@ -13,12 +13,14 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 
 import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
 
 
 
 
 
 import { useCSVReader } from 'react-papaparse';
+import { TextField } from '@mui/material';
 
 
 
@@ -137,26 +139,23 @@ export default function CSVReader1() {
                 flexDirection: 'row',
 
                 marginBottom: 10,
+                marginTop:10
 
               }}>
 
-                <button type='button' {...getRootProps()} style={styles.browseFile}>
+                <Button type='button' variant='contained' {...getRootProps()}>
 
                   Browse file
 
-                </button>
+                </Button>
 
-                <div style={styles.acceptedFile}>
+                <TextField style={{width:'500px'}} value={acceptedFile && acceptedFile.name}/>
 
-                  {acceptedFile && acceptedFile.name}
-
-                </div>
-
-                <button {...getRemoveFileProps()} style={styles.remove}>
+                <Button type='button' color='error' variant='contained' {...getRemoveFileProps()}>
 
                   Remove
 
-                </button>
+                </Button>
 
               </div>
 

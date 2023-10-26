@@ -85,6 +85,7 @@ export class Agent extends Component {
     componentDidMount(){
         PredictionService.fetchPredictedDataForAgent()
             .then((res)=>{
+                console.log("RES :"+ JSON.stringify(res))
                 this.setState({openTask : res.data})
                 console.log(this.state.openTask)
             })
@@ -107,7 +108,7 @@ export class Agent extends Component {
           </Stack>
           <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
+            <TableHead style={{backgroundColor:'#FAF0E6'}}>
               <TableRow>
                 <TableCell padding="checkbox"><Checkbox color="primary"/></TableCell>
                 <TableCell align="center"><b>Incident Id</b></TableCell>

@@ -1,10 +1,7 @@
 import React from "react";
-import HomeIcon from '@mui/icons-material/Home';
-import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 // import BatchPredictionIcon from '@mui/icons-material/BatchPrediction';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
-import ViewListIcon from '@mui/icons-material/ViewList';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 
 export const SidebarData = [
@@ -19,7 +16,7 @@ export const SidebarData = [
     //     link: "/prediction"
     // },
     {
-        title: "Agent Pannel",
+        title: "Agent Panel",
         icon: <SupportAgentIcon/>,
         link: "/agent"
     },
