@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PredictionService from '../service/PredictionService'
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import { Link, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
 
 export class Dashboard extends Component {
 
@@ -35,6 +35,7 @@ export class Dashboard extends Component {
                 <TableCell align="center"><b>Status</b></TableCell>
                 {/* <TableCell align="center">Problem Area/Workgroup</TableCell> */}
                 <TableCell align="center"><b>Created At</b></TableCell>
+                <TableCell align="center"><b>Linked Jira</b></TableCell>
                 {/* <TableCell align="center">Recovery Actions</TableCell> */}
                 </TableRow>
               </TableHead>
@@ -69,6 +70,9 @@ export class Dashboard extends Component {
                     </Box>
                   </TableCell> */}
                   <TableCell align="center">{row.createdAt}</TableCell>
+                  <TableCell align="center"><Link rel="noreferrer noopener" 
+                    target="_blank" href={"https://gno-poc.atlassian.net/browse/"+row.jiraTicketNumber}>
+                      Link</Link></TableCell>
                   {/* <TableCell align="center">{row.recoveryActions}</TableCell> */}
                 </TableRow>
               ))}

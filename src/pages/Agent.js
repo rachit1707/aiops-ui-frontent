@@ -103,8 +103,8 @@ export class Agent extends Component {
       <div className='mainPannel'>
         <Stack spacing={2} sx={{marginTop:'20px'}}>
           <Stack spacing={{ xs: 1, sm: 2 }} direction="row" useFlexGap flexWrap="wrap" justifyContent="center">
-            <Button variant="contained" onClick={this.runBulkProcess}><ScheduleIcon/>&nbsp;&nbsp; Run Scheduler</Button>
-            <Button variant="contained" onClick={this.clearDB}><DeleteIcon/>&nbsp;&nbsp; Clear Database</Button>
+            <Button variant="contained" onClick={this.runBulkProcess}><ScheduleIcon/>&nbsp;&nbsp; Initiate Prediction Process</Button>
+            <Button variant="contained" onClick={this.clearDB}><DeleteIcon/>&nbsp;&nbsp; Clear Data</Button>
           </Stack>
           <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -184,6 +184,7 @@ export class Agent extends Component {
                         label="Workflow Steps"
                         multiline
                         fullWidth
+                        disabled={this.state.isWorkFlowRequired=="false"}
                         rows={4}
                         value={this.state.workflowSteps}
                         onChange={this.handleWorkflowSteps.bind(this)}
