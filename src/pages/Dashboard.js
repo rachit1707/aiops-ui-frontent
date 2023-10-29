@@ -49,31 +49,14 @@ export class Dashboard extends Component {
                 <TableCell align="center">{row.ban}</TableCell>
                   <TableCell align="center">{row.description}</TableCell>
                   <TableCell align="center">{row.type}</TableCell>
-                  {/* <TableCell align="center">{row.errorCode}</TableCell> */}
                   <TableCell align="center">{row.status}</TableCell>
-                  {/* <TableCell align="center">
-                    <Box sx={{ minWidth: 120 }}>
-                    <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">{row.workgroup}</InputLabel>
-                        <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={this.state.age}
-                        label="Age"
-                        onChange="#"
-                        >
-                            <MenuItem value={10}>Ten</MenuItem>
-                            <MenuItem value={20}>Twenty</MenuItem>
-                            <MenuItem value={30}>Thirty</MenuItem>
-                        </Select>
-                    </FormControl>
-                    </Box>
-                  </TableCell> */}
                   <TableCell align="center">{row.createdAt}</TableCell>
                   <TableCell align="center"><Link rel="noreferrer noopener" 
-                    target="_blank" href={"https://gno-poc.atlassian.net/browse/"+row.jiraTicketNumber}>
+                    target="_blank" href={"https://gno-poc.atlassian.net/browse/"+row.jiraTicketNumber}
+                    display={row.status == "Rejected" ? "block" : "none"} 
+                    >
                       Link</Link></TableCell>
-                  {/* <TableCell align="center">{row.recoveryActions}</TableCell> */}
+
                 </TableRow>
               ))}
               </TableBody>
