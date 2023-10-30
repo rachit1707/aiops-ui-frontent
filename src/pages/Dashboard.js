@@ -55,7 +55,7 @@ export class Dashboard extends Component {
                     target="_blank" href={"https://gno-poc.atlassian.net/browse/"+row.jiraTicketNumber}
                     display={row.status == "Rejected" ? "block" : "none"} 
                     >
-                      Link</Link></TableCell>
+                      {row.jiraTicketNumber}</Link></TableCell>
 
                 </TableRow>
               ))}

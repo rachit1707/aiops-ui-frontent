@@ -183,6 +183,7 @@ export default function CSVReader1() {
 
                       <TableRow>
 
+                        <TableCell align="center">Sr.No.</TableCell>
                         <TableCell align="center">Incident</TableCell>
 
                         <TableCell align="center">Ban</TableCell>
@@ -204,7 +205,7 @@ export default function CSVReader1() {
                       {data.slice(1).map((item, index) => (
 
                         <TableRow>
-
+                          <TableCell align="center" key={index} >{index+1}</TableCell>
                           <TableCell align="center" key={index} >{item[0]}</TableCell>
 
                           <TableCell align="center" key={index} >{item[1]}</TableCell>

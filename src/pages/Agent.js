@@ -111,6 +111,7 @@ export class Agent extends Component {
             <TableHead style={{backgroundColor:'#FAF0E6'}}>
               <TableRow>
                 <TableCell padding="checkbox"><Checkbox color="primary"/></TableCell>
+                <TableCell align="center"><b>Sr.No.</b></TableCell>
                 <TableCell align="center"><b>Incident Id</b></TableCell>
                 <TableCell align="center"><b>BAN</b></TableCell>
                 <TableCell align="center"><b>Description</b></TableCell>
@@ -124,9 +125,10 @@ export class Agent extends Component {
               </TableRow>
             </TableHead>
             <TableBody>
-            {this.state.openTask.map((row) =>(
+            {this.state.openTask.map((row,index) =>(
                 <TableRow key={row.id}>
                   <TableCell padding="checkbox"><Checkbox color="primary"/></TableCell>
+                  <TableCell align="center">{index+1}</TableCell>
                   <TableCell align="center">{row.id}</TableCell>
                   <TableCell align="center">{row.ban}</TableCell>
                   <TableCell align="center">{row.description}</TableCell>
