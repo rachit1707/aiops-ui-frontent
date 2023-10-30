@@ -128,7 +128,7 @@ export class Agent extends Component {
             {this.state.openTask.map((row,index) =>(
                 <TableRow key={row.id}>
                   <TableCell padding="checkbox"><Checkbox color="primary"/></TableCell>
-                  <TableCell align="center">{index+1}</TableCell>
+                  <TableCell align="center">{index+1}.</TableCell>
                   <TableCell align="center">{row.id}</TableCell>
                   <TableCell align="center">{row.ban}</TableCell>
                   <TableCell align="center">{row.description}</TableCell>
