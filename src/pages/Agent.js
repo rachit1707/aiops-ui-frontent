@@ -113,13 +113,12 @@ export class Agent extends Component {
                 <TableCell padding="checkbox"><Checkbox color="primary"/></TableCell>
                 <TableCell align="center"><b>Sr.No.</b></TableCell>
                 <TableCell align="center"><b>Incident Id</b></TableCell>
-                <TableCell align="center"><b>BAN</b></TableCell>
                 <TableCell align="center"><b>Description</b></TableCell>
                 <TableCell align="center"><b>Status</b></TableCell>
-                <TableCell align="center"><b>Source System</b></TableCell>
-                <TableCell align="center"><b>RCA</b></TableCell>
-                <TableCell align="center" style={{width:'100px'}}><b>Problem Area/Workgroup</b></TableCell>
-                <TableCell align="center"><b>Soultion</b></TableCell>
+                <TableCell align="center"><b>Category</b></TableCell>
+                <TableCell align="center"><b>Action</b></TableCell>
+                <TableCell align="center"><b>Priority</b></TableCell>
+                <TableCell align="center"><b>Comments</b></TableCell>
                 <TableCell align="center"><b>Created At</b></TableCell>
                 <TableCell align="center"></TableCell>
               </TableRow>
@@ -129,34 +128,14 @@ export class Agent extends Component {
                 <TableRow key={row.id}>
                   <TableCell padding="checkbox"><Checkbox color="primary"/></TableCell>
                   <TableCell align="center">{index+1}.</TableCell>
-                  <TableCell align="center">{row.id}</TableCell>
-                  <TableCell align="center">{row.ban}</TableCell>
+                  <TableCell align="center">{row.reference}</TableCell>
                   <TableCell align="center">{row.description}</TableCell>
                   <TableCell align="center">{row.status}</TableCell>
-                  <TableCell align="center">{row.type}</TableCell>
-                  <TableCell align="center">{row.rca}</TableCell>
-
-                  <TableCell align="center">
-                  <FormControl fullWidth>
-                    <NativeSelect
-                      defaultValue={row.workgroup}
-                      inputProps={{
-                        name: 'age',
-                        id: 'uncontrolled-native',
-                      }} style={{width:'150px'}}
-                    >
-                      <option value={"orderWorkgroup"}>orderWorkgroup</option>
-                      <option value={"networkWorkgroup"}>networkWorkgroup</option>
-                      <option value={"productWorkgroup"}>productWorkgroup</option>
-                      <option value={"orderCancelWorkgroup"}>orderCancelWorkgroup</option>
-                      <option value={"FinX-L1-OPS-ACC"}>FinX-L1-OPS-ACC</option>
-                      <option value={"FinX-L1-OPS-DEP"}>FinX-L1-OPS-DEP</option>
-                      <option value={"FIN-X-Performance"}>FIN-X-Performance</option>
-                    </NativeSelect>
-                  </FormControl>
-                  </TableCell>
-                  <TableCell align="center">{row.recoveryActions  }</TableCell>
-                  <TableCell align="center">{row.createdAt }</TableCell>
+                  <TableCell align="center">{row.category}</TableCell>
+                  <TableCell align="center">{row.action}</TableCell>
+                  <TableCell align="center">{row.priority}</TableCell>
+                  <TableCell align="center">{row.comments}</TableCell>
+                  <TableCell align="center">{row.createdAt}</TableCell>
                   <TableCell align="center">
                   <Button variant="contained" color="success" onClick={()=>this.handleAccept(row)}>
                     Accept
